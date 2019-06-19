@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace Adrenak.Shiain {
-	public static class UIGradientUtils {
+	public static class GradientUtils {
 		public struct Matrix2x3 {
 			public float m00, m01, m02, m10, m11, m12;
 			public Matrix2x3(float m00, float m01, float m02, float m10, float m11, float m12) {

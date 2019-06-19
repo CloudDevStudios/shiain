@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Adrenak.Shiain {
-	public class Expandable : MonoBehaviour {
+	[ExecuteInEditMode]
+	[RequireComponent(typeof(CanvasGroup))]
+	public class ScaleTransition : MonoBehaviour {
 		public enum State {
 			Expanding,
 			Shrinking
@@ -12,6 +15,8 @@ namespace Adrenak.Shiain {
 
 		[SerializeField] Vector2 m_MinSize;
 		[SerializeField] Vector2 m_MaxSize;
+		public UnityEvent onExpanded;
+		public UnityEvent onShrunk;
 
 		Vector2 minCenter;
 		Vector2 maxCenter;
@@ -24,8 +29,7 @@ namespace Adrenak.Shiain {
 		RectTransform m_RT;
 		RectTransform RT {
 			get {
-				if (m_RT == null)
-					m_RT = GetComponent<RectTransform>();
+				if (m_RT == null) m_RT = GetComponent<RectTransform>();
 				return m_RT;
 			}
 		}
@@ -37,36 +41,32 @@ namespace Adrenak.Shiain {
 				state = State.Expanding;
 		}
 
+		public void Expand() {
+			state = State.Expanding;
+		}
+
+		public void Shrink() {
+			state = State.Shrinking;
+		}
+
 		void OnValidate() {
-			var minCenter = maxCenter = new Vector2 {
-				x = (RT.offsetMin.x + RT.offsetMax.x) / 2,
-				y = (RT.offsetMin.y + RT.offsetMax.y) / 2,
+			if (m_MaxSize != Vector2.zero) return;
+
+			state = State.Expanding;
+			m_MaxSize = new Vector2 {
+				x = RT.offsetMax.x - RT.offsetMin.x,
+				y = RT.offsetMax.y - RT.offsetMin.y
 			};
-
-			var minMin = new Vector2(minCenter.x - m_MinSize.x * 0.5f, minCenter.y - m_MinSize.y * 0.5f);
-			var minMax = new Vector2(minCenter.x + m_MinSize.x * 0.5f, minCenter.y + m_MinSize.y * 0.5f);
-
-			var maxMin = new Vector2(maxCenter.x - m_MaxSize.x * 0.5f, maxCenter.y - m_MaxSize.y * 0.5f);
-			var maxMax = new Vector2(maxCenter.x + m_MaxSize.x * 0.5f, maxCenter.y + m_MaxSize.y * 0.5f);
-
-			if (state == State.Expanding) {
-				RT.offsetMin = maxMin;
-				RT.offsetMax = maxMax;
-			}
-			else if(state == State.Shrinking) {
-				RT.offsetMin = minMin;
-				RT.offsetMax = minMax;
-			}
 		}
 
 		void Update() {
 			if (state == State.Expanding)
-				InterpolateExpantion();
+				ExpandOverTime();
 			else if (state == State.Shrinking)
-				InterpolateShrinking();
+				ShrinkOverTime();
 		}
 
-		void InterpolateExpantion() {
+		void ExpandOverTime() {
 			var maxCenter = new Vector2 {
 				x = (RT.offsetMin.x + RT.offsetMax.x) / 2,
 				y = (RT.offsetMin.y + RT.offsetMax.y) / 2,
@@ -84,10 +84,12 @@ namespace Adrenak.Shiain {
 				RT.offsetMax = maxMax;
 				gameObject.SetActive(false);
 				gameObject.SetActive(true);
+
+				onExpanded?.Invoke();
 			}
 		}
 
-		void InterpolateShrinking() {
+		void ShrinkOverTime() {
 			var minCenter = new Vector2 {
 				x = (RT.offsetMin.x + RT.offsetMax.x) / 2,
 				y = (RT.offsetMin.y + RT.offsetMax.y) / 2,
@@ -105,6 +107,8 @@ namespace Adrenak.Shiain {
 				RT.offsetMax = minMax;
 				gameObject.SetActive(false);
 				gameObject.SetActive(true);
+
+				onShrunk?.Invoke();
 			}
 		}
 	}

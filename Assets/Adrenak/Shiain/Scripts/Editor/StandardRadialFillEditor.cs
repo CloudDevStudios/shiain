@@ -141,10 +141,6 @@ namespace Adrenak.Shiain {
 			_Backgroundbordertangentwidth = FindProperty("_Backgroundbordertangentwidth", _properties);
 		}
 
-		static GUIStyle title = null;
-		static GUIStyle linkStyle = null;
-		static string repoURL = "https://github.com/adultlink/radialprogressbar";
-
 		void DrawGUI() {
 			GetProperties();
 
