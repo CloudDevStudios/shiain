@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Adrenak.Shiain {
-	[RequireComponent(typeof(UIEvents))]
+	[RequireComponent(typeof(UIElement))]
 	public class ConfirmationBox : MonoBehaviour {
 		static ConfirmationBox m_Instance;
 		static Action<bool> m_Response;
 
-		[SerializeField] UIEvents m_State;
+		[SerializeField] UIElement m_State;
 		[SerializeField] Text m_Title;
 		[SerializeField] Text m_Body;
 		[SerializeField] Text m_Affirmative;

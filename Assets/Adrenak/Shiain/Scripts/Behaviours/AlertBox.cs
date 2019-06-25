@@ -7,12 +7,12 @@ using UnityEngine.UI;
 // introduce a reference dictionary to allow
 // for easy invokation
 namespace Adrenak.Shiain {
-	[RequireComponent(typeof(UIEvents))]
+	[RequireComponent(typeof(UIElement))]
 	public class AlertBox : MonoBehaviour {
 		static AlertBox m_Instance;
 		static Action m_Response;
 
-		[SerializeField] UIEvents m_State;
+		[SerializeField] UIElement m_State;
 		[SerializeField] Text m_Title;
 		[SerializeField] Text m_Body;
 		[SerializeField] Text m_Affirmative;

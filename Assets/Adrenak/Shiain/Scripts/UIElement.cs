@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Adrenak.Shiain {
 	[ExecuteInEditMode]
-	public class UIEvents : MonoBehaviour {
+	public class UIElement : MonoBehaviour {
 		public UnityEvent onOpened;
 		public UnityEvent onClosed;
 		public UnityEvent onMinimized;
