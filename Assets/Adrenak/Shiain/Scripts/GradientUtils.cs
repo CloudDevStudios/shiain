@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace Adrenak.Shiain {
 	public static class GradientUtils {

@@ -201,8 +201,8 @@ GameObject:
   m_Component:
   - component: {fileID: 817298611}
   - component: {fileID: 817298614}
-  - component: {fileID: 817298613}
   - component: {fileID: 817298612}
+  - component: {fileID: 817298613}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 817298610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a832df0d7bb845ec878cc0adac39c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -300,14 +300,65 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  ShapeProperties:
+    FillColor:
+      serializedVersion: 2
+      rgba: 4294967295
+    DrawFill: 1
+    DrawFillShadow: 1
+    DrawOutline: 1
+    OutlineColor:
+      serializedVersion: 2
+      rgba: 4291853867
+    DrawOutlineShadow: 0
+  RoundedProperties:
+    Type: 1
+    ResolutionMode: 0
+    UniformRadius: 15
+    UseMaxRadius: 1
+    TLRadius: 15
+    TLResolution:
+      Resolution: 0
+      FixedResolution: 10
+      ResolutionMaxDistance: 4
+    TRRadius: 15
+    TRResolution:
+      Resolution: 0
+      FixedResolution: 10
+      ResolutionMaxDistance: 4
+    BRRadius: 15
+    BRResolution:
+      Resolution: 0
+      FixedResolution: 10
+      ResolutionMaxDistance: 4
+    BLRadius: 15
+    BLResolution:
+      Resolution: 0
+      FixedResolution: 10
+      ResolutionMaxDistance: 4
+    UniformResolution:
+      Resolution: 0
+      FixedResolution: 10
+      ResolutionMaxDistance: 4
+  OutlineProperties:
+    Type: 0
+    LineWeight: 15.4
+  ShadowProperties:
+    ShowShape: 1
+    ShowShadows: 1
+    Angle: 0
+    Distance: 0
+    Shadows:
+    - Color:
+        serializedVersion: 2
+        rgba: 2013265920
+      Offset: {x: 20, y: -20}
+      Size: 5
+      Softness: 0.754
+    Offset: {x: 0, y: -0}
+  AntiAliasingProperties:
+    AntiAliasing: 1.25
+  Sprite: {fileID: 0}
 --- !u!222 &817298614
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -548,7 +599,7 @@ Prefab:
     - target: {fileID: 224826378202462514, guid: bce937f2da9a3d34a80ca12a57df0d35,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: -0.0000038146973
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224826378202462514, guid: bce937f2da9a3d34a80ca12a57df0d35,
         type: 2}
@@ -579,21 +630,6 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114161989072519682, guid: bce937f2da9a3d34a80ca12a57df0d35,
-        type: 2}
-      propertyPath: state
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114161989072519682, guid: bce937f2da9a3d34a80ca12a57df0d35,
-        type: 2}
-      propertyPath: m_MaxSize.y
-      value: 600
-      objectReference: {fileID: 0}
-    - target: {fileID: 114161989072519682, guid: bce937f2da9a3d34a80ca12a57df0d35,
-        type: 2}
-      propertyPath: m_MinSize.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bce937f2da9a3d34a80ca12a57df0d35, type: 2}

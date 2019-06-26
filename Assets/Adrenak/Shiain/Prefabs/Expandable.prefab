@@ -20,10 +20,12 @@ GameObject:
   m_Component:
   - component: {fileID: 224703853445593682}
   - component: {fileID: 222790716126277514}
+  - component: {fileID: 225933028705025514}
   - component: {fileID: 114811965003917160}
   - component: {fileID: 114719131355482608}
   - component: {fileID: 114286719094286648}
   - component: {fileID: 114731685469374418}
+  - component: {fileID: 114243459469884846}
   m_Layer: 5
   m_Name: Expandable
   m_TagString: Untagged
@@ -98,6 +100,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Expandable
+--- !u!114 &114243459469884846
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1001110254028264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a488aaa16f707479c065ca1ca3c37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_color1: {r: 0, g: 0.6689658, b: 1, a: 1}
+  m_color2: {r: 1, g: 1, b: 1, a: 1}
+  m_angle: -90
+  m_ignoreRatio: 1
 --- !u!114 &114286719094286648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,8 +255,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab9da748840643a3bd4794f6f138979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 1
+  onStartTransitionUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onEndTransitionUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onStartTransitionDown:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onEndTransitionDown:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   rate: 8
-  state: 0
   m_MinSize: {x: 600, y: 100}
   m_MaxSize: {x: 600, y: 400}
 --- !u!222 &222402739224674330
@@ -304,7 +341,7 @@ RectTransform:
   m_GameObject: {fileID: 1001110254028264}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0007789, y: 1.0007789, z: 1.0007789}
+  m_LocalScale: {x: 1.0007788, y: 1.0007788, z: 1.0007788}
   m_Children:
   - {fileID: 224688553714267122}
   - {fileID: 224123887006570116}
@@ -314,5 +351,16 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 920, y: -299}
-  m_SizeDelta: {x: 600, y: 400}
+  m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225933028705025514
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1001110254028264}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
