@@ -1,0 +1,10 @@
+{
+    "name": "Adrenak.Shiain.NaughtyAttributes.Editor",
+    "references": [
+        "Adrenak.Shiain.NaughtyAttributes.Core"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

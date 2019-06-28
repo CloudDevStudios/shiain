@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using Adrenak.Shiain.NaughtyAttributes;
 
 namespace Adrenak.Shiain {
 	[ExecuteInEditMode]
@@ -9,52 +10,68 @@ namespace Adrenak.Shiain {
 			Down
 		}
 
-		public State state = State.Down;
-		public bool IsTransitioning { get; private set; }
+		[ReadOnly] [SerializeField] State m_State = State.Down;
+		[ReadOnly] [SerializeField] bool m_IsTransitioning;
 		public UnityEvent onStartTransitionUp;
 		public UnityEvent onEndTransitionUp;
 		public UnityEvent onStartTransitionDown;
 		public UnityEvent onEndTransitionDown;
 
-		[ContextMenu("Toggle Transition")]
+		private void OnValidate() {
+#if UNITY_EDITOR
+			if (!Application.isPlaying) {
+				UnityEditor.EditorApplication.update -= LateUpdate;
+				UnityEditor.EditorApplication.update += LateUpdate;
+			}
+#endif
+		}
+
+		[Button("Toggle Transition")]
 		public void Toggle() {
-			Debug.Log("Toggle");
-			if (state == State.Up)
+			if (m_State == State.Up)
 				TransitionDown();
 			else
 				TransitionUp();
 		}
 
-		[ContextMenu("Transition Up")]
+		[Button("Transition Up")]
 		public void TransitionUp() {
-			state = State.Up;
-			IsTransitioning = true;
+			m_State = State.Up;
+			m_IsTransitioning = true;
 			onStartTransitionUp.Invoke();
 		}
 
-		[ContextMenu("Transition Down")]
+		[Button("Transition Down")]
 		public void TransitionDown() {
-			state = State.Down;
-			IsTransitioning = true;
+			m_State = State.Down;
+			m_IsTransitioning = true;
 			onStartTransitionDown.Invoke();
 		}
 
+		protected void SetState(State state) {
+			m_State = state;
+		}
+
 		void LateUpdate() {
-			if (state == State.Up && IsTransitioning) {
+			if (m_State == State.Up && m_IsTransitioning) {
 				if (TransitionUpOverTime()) {
 					onEndTransitionUp.Invoke();
-					IsTransitioning = false;
+					m_IsTransitioning = false;
 				}
 			}
-			else if (state == State.Down && IsTransitioning) {
+			else if (m_State == State.Down && m_IsTransitioning) {
 				if (TransitionDownOverTime()) {
 					onEndTransitionDown.Invoke();
-					IsTransitioning = false;
+					m_IsTransitioning = false;
 				}
 			}
+#if UNITY_EDITOR
+			if(!Application.isPlaying)
+				UnityEditor.EditorApplication.delayCall += LateUpdate;
+#endif
 		}
 
 		protected abstract bool TransitionUpOverTime();
-		protected abstract bool TransitionDownOverTime();
+		protected abstract bool TransitionDownOverTime();		
 	}
 }

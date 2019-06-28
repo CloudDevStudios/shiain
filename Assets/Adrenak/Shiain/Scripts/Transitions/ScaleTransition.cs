@@ -2,7 +2,6 @@
 
 // TODO: Check when values are driven by layout groups
 namespace Adrenak.Shiain {
-	[ExecuteInEditMode]
 	[RequireComponent(typeof(CanvasGroup))]
 	public class ScaleTransition : Transition {
 		public float rate = 8f;
@@ -35,35 +34,44 @@ namespace Adrenak.Shiain {
 		}
 
 		void OnValidate() {
-			if (m_MaxSize != Vector2.zero) return;
+			if (m_MaxSize == Vector2.zero) {
+				m_MaxSize = new Vector2 {
+					x = RT.offsetMax.x - RT.offsetMin.x,
+					y = RT.offsetMax.y - RT.offsetMin.y
+				};
+			}
+			
+			onStartTransitionUp.RemoveListener(HandleOnStartTransitionUp);
+			onStartTransitionUp.AddListener(HandleOnStartTransitionUp);
 
-			state = State.Up;
-			m_MaxSize = new Vector2 {
-				x = RT.offsetMax.x - RT.offsetMin.x,
-				y = RT.offsetMax.y - RT.offsetMin.y
-			};
+			onEndTransitionUp.RemoveListener(HandleOnEndTransitionUp);
+			onEndTransitionUp.AddListener(HandleOnEndTransitionUp);
+
+			onStartTransitionDown.RemoveListener(HandleOnStartTransitionDown);
+			onStartTransitionDown.AddListener(HandleOnStartTransitionDown);
+
+			onEndTransitionDown.RemoveListener(HandleOnEndTransitionDown);
+			onEndTransitionDown.AddListener(HandleOnEndTransitionDown);
 		}
 
-		private void Awake() {
-			onStartTransitionUp.AddListener(() => {
-				Group.blocksRaycasts = false;
-				Group.interactable = false;
-			});
+		void HandleOnStartTransitionUp() {
+			Group.blocksRaycasts = false;
+			Group.interactable = false;
+		}
 
-			onEndTransitionUp.AddListener(() => {
-				Group.blocksRaycasts = true;
-				Group.interactable = true;
-			});
+		void HandleOnStartTransitionDown() {
+			Group.blocksRaycasts = false;
+			Group.interactable = false;
+		}
 
-			onStartTransitionDown.AddListener(() => {
-				Group.blocksRaycasts = false;
-				Group.interactable = false;
-			});
+		void HandleOnEndTransitionUp() {
+			Group.blocksRaycasts = true;
+			Group.interactable = true;
+		}
 
-			onEndTransitionDown.AddListener(() => {
-				Group.blocksRaycasts = true;
-				Group.interactable = true;
-			});
+		void HandleOnEndTransitionDown() {
+			Group.blocksRaycasts = true;
+			Group.interactable = true;
 		}
 
 		protected override bool TransitionUpOverTime() {

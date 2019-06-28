@@ -236,7 +236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eac3bf415d33164d92efc4655a0c608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 2
+  m_State: 1
+  m_IsTransitioning: 0
   onStartTransitionUp:
     m_PersistentCalls:
       m_Calls: []
@@ -267,7 +268,7 @@ MonoBehaviour:
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.7105417
+      time: 0.7096262
       value: 1.1708813
       inSlope: -0.006450268
       outSlope: -0.006450268
@@ -1028,7 +1029,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eac3bf415d33164d92efc4655a0c608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 2
+  m_State: 1
+  m_IsTransitioning: 0
   onStartTransitionUp:
     m_PersistentCalls:
       m_Calls: []
@@ -1059,10 +1061,10 @@ MonoBehaviour:
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.7917388
-      value: 1.1366172
-      inSlope: 0.091441825
-      outSlope: 0.091441825
+      time: 0.73062277
+      value: 1.1206443
+      inSlope: 0.0591732
+      outSlope: 0.0591732
       tangentMode: 0
     - serializedVersion: 2
       time: 1
@@ -1081,14 +1083,8 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.78304595
-      value: 1.1339586
-      inSlope: -0.009821876
-      outSlope: -0.009821876
+      inSlope: 0.98018706
+      outSlope: 0.98018706
       tangentMode: 0
     - serializedVersion: 2
       time: 1

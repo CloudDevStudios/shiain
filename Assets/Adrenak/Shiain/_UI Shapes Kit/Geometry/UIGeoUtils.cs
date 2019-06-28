@@ -1,8 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-
-using ThisOtherThing.Utils;
+﻿#if !UNITY_2018_3_OR_NEWER
+using UnityEngine;
 
 namespace Adrenak.Shiain.UIShapesKit {
 	public class GeoUtils {
@@ -382,3 +379,4 @@ namespace Adrenak.Shiain.UIShapesKit {
 		}
 	}
 }
+#endif

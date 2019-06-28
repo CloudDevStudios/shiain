@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-
-using ThisOtherThing.Utils;
 using RoundingProperties = Adrenak.Shiain.UIShapesKit.GeoUtils.RoundingProperties;
 
 namespace Adrenak.Shiain.UIShapesKit

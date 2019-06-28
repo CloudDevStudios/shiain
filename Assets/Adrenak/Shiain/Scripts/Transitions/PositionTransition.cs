@@ -73,7 +73,7 @@ namespace Adrenak.Shiain {
 		protected override bool TransitionDownOverTime() {
 			if (m_EndTime >= Time.unscaledTime) {
 				// Get the appropriate value from the AnimationCurve using a normalised value and lerp
-				float curveValue = m_InCurve.Evaluate((Time.unscaledTime - m_StartTime) / (m_EndTime - m_StartTime));
+				float curveValue = m_OutCurve.Evaluate((Time.unscaledTime - m_StartTime) / (m_EndTime - m_StartTime));
 				RT.localPosition = Vector3.LerpUnclamped(m_StartPos, m_OutPosition, curveValue);
 				return false;
 			}

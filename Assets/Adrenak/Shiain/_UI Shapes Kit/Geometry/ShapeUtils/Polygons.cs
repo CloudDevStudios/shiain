@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-using ThisOtherThing.Utils;
-
 namespace Adrenak.Shiain.UIShapesKit
 {
 	public class Polygons
