@@ -58,6 +58,8 @@ namespace Adrenak.Shiain {
 			if (!IsPopulated) return;
 			IsPopulated = false;
 
+			Pagination = null;
+
 			foreach(var p in m_Instantiated) {
 				if (p.gameObject != null)
 					Destroy(p.gameObject);

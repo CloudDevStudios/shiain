@@ -768,10 +768,10 @@ MonoBehaviour:
     Shadows:
     - Color:
         serializedVersion: 2
-        rgba: 2013265920
+        rgba: 1006632960
       Offset: {x: 50, y: -50}
       Size: 5
-      Softness: 0.5
+      Softness: 0.289
     Offset: {x: 0, y: -0}
   AntiAliasingProperties:
     AntiAliasing: 1.25
