@@ -23,7 +23,7 @@ namespace Adrenak.Shiain {
 				Debug.Log("Populator on" + gameObject.name + " is already populated.");
 				return;
 			}
-			if(m_Widget == null) {
+			if (m_Widget == null) {
 				Debug.Log("No widget prefab in " + gameObject.name + " populator");
 				return;
 			}
@@ -35,7 +35,7 @@ namespace Adrenak.Shiain {
 
 		void CreateWidgets() {
 			IsPopulated = true;
-			foreach(var model in Pagination.Get(Data)) {
+			foreach (var model in Pagination.Get(Data)) {
 				var instance = Instantiate(m_Widget, m_Container);
 				instance.Init(model);
 				m_Instantiated.Add(instance);
@@ -60,7 +60,7 @@ namespace Adrenak.Shiain {
 
 			Pagination = null;
 
-			foreach(var p in m_Instantiated) {
+			foreach (var p in m_Instantiated) {
 				if (p.gameObject != null)
 					Destroy(p.gameObject);
 			}

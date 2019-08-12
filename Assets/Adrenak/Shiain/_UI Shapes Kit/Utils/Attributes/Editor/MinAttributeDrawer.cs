@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if !UNITY_2018_3_OR_NEWER
+using UnityEngine;
 using UnityEditor;
 
 namespace Adrenak.Shiain.UIShapesKit {
@@ -20,3 +21,4 @@ namespace Adrenak.Shiain.UIShapesKit {
 		}
 	}
 }
+#endif
