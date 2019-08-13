@@ -31,6 +31,9 @@ namespace Adrenak.Shiain {
 				HandleSelection();
 			else
 				HandleDeselection();
+
+			gameObject.SetActive(false);
+			gameObject.SetActive(true);
 		}
 
 		public void SetColor(Color color) {
