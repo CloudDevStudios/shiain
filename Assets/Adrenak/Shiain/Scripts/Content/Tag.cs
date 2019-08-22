@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using System;
 using Adrenak.Shiain.UIShapesKit;
@@ -6,34 +7,50 @@ using Adrenak.Shiain.UIShapesKit;
 namespace Adrenak.Shiain {
 	public class Tag : MonoBehaviour {
 		public bool isSilent;
+
 		public event Action OnSelected;
+		public UnityEvent onSelected;
+
 		public event Action OnDeselected;
+		public UnityEvent onDeselected;
 
 		[SerializeField] Text m_DisplayText;
 		[SerializeField] Button m_Button;
 		[SerializeField] Rectangle m_Fill;
 		[SerializeField] Rectangle m_Outline;
 
-		public bool m_IsSelected;
+		public object Data { get; private set; }
+		public bool IsSelected;
+		public string ID { get; private set; }
+		public string Text {
+			get { return m_DisplayText.text; }
+			set { m_DisplayText.text = value; }
+		}
 
 		void Awake() {
-			m_Button.onClick.AddListener(() => {
-				if (m_IsSelected)
+			m_Button.onClick.AddListener((UnityAction)(() => {
+				if (IsSelected)
 					HandleDeselection();
 				else
 					HandleSelection();
-			});
+			}));
 		}
 
-		public void Init(string displayText, bool isSelected = false) {
-			m_DisplayText.text = displayText;
+		public void Init(string id, string displayText, bool isSelected, object data) {
+			ID = id;
+			Text = displayText;
+			Data = data;
+
+			isSilent = true;
 			if (isSelected)
 				HandleSelection();
 			else
 				HandleDeselection();
+			isSilent = true;
+		}
 
-			gameObject.SetActive(false);
-			gameObject.SetActive(true);
+		public void SetData(object data) {
+			Data = data;
 		}
 
 		public void SetColor(Color color) {
@@ -44,21 +61,21 @@ namespace Adrenak.Shiain {
 		}
 
 		public void HandleDeselection() {
-			m_IsSelected = false;
-			m_Fill.enabled = false;
-			if (!isSilent)
+			IsSelected = false;
+			m_Fill.gameObject.SetActive(false);
+			if (!isSilent) {
 				OnDeselected?.Invoke();
+				onDeselected?.Invoke();
+			}
 		}
 
 		public void HandleSelection() {
-			m_IsSelected = true;
-			m_Fill.enabled = true;
-			if (!isSilent)
+			IsSelected = true;
+			m_Fill.gameObject.SetActive(true);
+			if (!isSilent) {
 				OnSelected?.Invoke();
-		}
-
-		public bool IsSelected() {
-			return m_IsSelected;
+				onSelected?.Invoke();
+			}
 		}
 	}
 }

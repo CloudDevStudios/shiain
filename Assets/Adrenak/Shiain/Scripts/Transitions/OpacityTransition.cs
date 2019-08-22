@@ -13,29 +13,13 @@ namespace Adrenak.Shiain {
 			}
 		}
 
-		void OnValidate() {
-			onStartTransitionUp.RemoveListener(HandleOnStartTransitionUp);
-			onStartTransitionUp.AddListener(HandleOnStartTransitionUp);
-
-			onStartTransitionDown.RemoveListener(HandleOnStartTransitionDown);
-			onStartTransitionDown.AddListener(HandleOnStartTransitionDown);
-		}
-
-		void HandleOnStartTransitionUp() {
-			Group.blocksRaycasts = true;
-			Group.interactable = true;
-		}
-
-		void HandleOnStartTransitionDown() {
-			Group.blocksRaycasts = false;
-			Group.interactable = false;
-		}
-
 		protected override bool TransitionUpOverTime() {
 			Group.alpha = Mathf.Lerp(Group.alpha, 1, Time.deltaTime * rate);
 
-			if (Group.alpha > .99f) {
+			if (Group.alpha > .9f) {
 				Group.alpha = 1;
+				Group.blocksRaycasts = true;
+				Group.interactable = true;
 				return true;
 			}
 			return false;
@@ -44,8 +28,10 @@ namespace Adrenak.Shiain {
 		protected override bool TransitionDownOverTime() {
 			Group.alpha = Mathf.Lerp(Group.alpha, 0, Time.deltaTime * rate);
 
-			if (Group.alpha < .01f) {
+			if (Group.alpha < .1f) {
 				Group.alpha = 0;
+				Group.blocksRaycasts = false;
+				Group.interactable = false;
 				return true;
 			}
 			return false;

@@ -17,21 +17,16 @@ namespace Adrenak.Shiain {
 		public UnityEvent onStartTransitionDown;
 		public UnityEvent onEndTransitionDown;
 
-		private void OnValidate() {
-#if UNITY_EDITOR
-			if (!Application.isPlaying) {
-				UnityEditor.EditorApplication.update -= LateUpdate;
-				UnityEditor.EditorApplication.update += LateUpdate;
-			}
-#endif
-		}
-
 		[Button("Toggle Transition")]
 		public void Toggle() {
 			if (m_State == State.Up)
 				TransitionDown();
 			else
 				TransitionUp();
+#if UNITY_EDITOR
+			gameObject.SetActive(false);
+			gameObject.SetActive(true);
+#endif
 		}
 
 		[Button("Transition Up")]
@@ -39,6 +34,10 @@ namespace Adrenak.Shiain {
 			m_State = State.Up;
 			m_IsTransitioning = true;
 			onStartTransitionUp.Invoke();
+#if UNITY_EDITOR
+			gameObject.SetActive(false);
+			gameObject.SetActive(true);
+#endif
 		}
 
 		[Button("Transition Down")]
@@ -46,6 +45,10 @@ namespace Adrenak.Shiain {
 			m_State = State.Down;
 			m_IsTransitioning = true;
 			onStartTransitionDown.Invoke();
+#if UNITY_EDITOR
+			gameObject.SetActive(false);
+			gameObject.SetActive(true);
+#endif
 		}
 
 		protected void SetState(State state) {
@@ -65,10 +68,6 @@ namespace Adrenak.Shiain {
 					m_IsTransitioning = false;
 				}
 			}
-#if UNITY_EDITOR
-			if(!Application.isPlaying)
-				UnityEditor.EditorApplication.delayCall += LateUpdate;
-#endif
 		}
 
 		protected abstract bool TransitionUpOverTime();

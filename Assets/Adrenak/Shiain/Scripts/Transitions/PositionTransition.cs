@@ -27,10 +27,10 @@ namespace Adrenak.Shiain {
 		public float m_EndTime;
 
 		private void OnValidate() {
-			Start();
+			Awake();
 		}
 
-		void Start() {
+		void Awake() {
 			if (m_StartOffScreen)
 				RT.localPosition = m_OutPosition;
 
@@ -50,11 +50,6 @@ namespace Adrenak.Shiain {
 				m_EndTime = Time.unscaledTime + m_OutDuration;
 				m_StartPos = RT.localPosition;
 			});
-		}
-
-		private void Update() {
-			if (Input.GetKeyDown(KeyCode.A))
-				TransitionUp();
 		}
 
 		protected override bool TransitionUpOverTime() {

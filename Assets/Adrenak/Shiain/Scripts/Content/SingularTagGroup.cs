@@ -1,46 +1,52 @@
 ﻿using System.Linq;
 using System;
-using System.Collections;
-using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Adrenak.Shiain {
-	public class MultipleTagGroup : MonoBehaviour {
+	public class SingularTagGroup : MonoBehaviour {
 		public class AddRequest {
 			public string id;
 			public string text;
-			public bool isSelected;
 			public object data;
 		}
 
 		public event Action<Tag> OnSelected;
 		public event Action<Tag> OnDeselected;
+		public Tag SelectedIndex { get { return m_SelectedTag; } }
 		public List<Tag> Tags { get; private set; }
 		public Transform Container { get { return m_Container; } }
 
 		[Header("Setup")]
+		public Color[] tagColors;
 		[SerializeField] Tag m_Prefab;
 		[SerializeField] Transform m_Container;
-		public Color[] tagColors;
 
 		[Header("Init")]
+		[SerializeField] Tag m_SelectedTag;
 		[SerializeField] List<AddRequest> m_InitialValues;
 
 		float m_LastModifyTime;
 
 		void Awake() {
 			Tags = new List<Tag>();
+
+			// Add dynamic tags on startup
 			Add(m_InitialValues);
+
+			if(m_SelectedTag != null)
+				SelectTag(m_SelectedTag);
 		}
 
 		private void Update() {
 			// For some reason, marking for redraw only once doesn't work
 			// So, from the time of modification we invoke this every frame for
 			// .5 seconds
-			if (Time.time > m_LastModifyTime && Time.time < m_LastModifyTime + .5f) 
-				LayoutRebuilder.MarkLayoutForRebuild(GetComponent<RectTransform>());				
+			if (Time.time > m_LastModifyTime && Time.time < m_LastModifyTime + .5f)
+				LayoutRebuilder.MarkLayoutForRebuild(GetComponent<RectTransform>());
 		}
 
 		public void Rebuild() {
@@ -56,49 +62,62 @@ namespace Adrenak.Shiain {
 		public void Add(List<AddRequest> requests) {
 			var createdTags = new List<Tag>();
 			try {
-				foreach (var req in requests)
-					Add(req);
+				foreach (var req in requests) {
+					var tag = Add(req);
+					if (tag != null)
+						createdTags.Add(tag);
+				}
 			}
 			catch {
-				foreach (var tag in createdTags) {
+				foreach(var tag in createdTags) {
 					Tags.Remove(tag);
 					Destroy(tag);
 				}
 			}
 		}
 
-		public void Add(AddRequest req) {
-			foreach (var _tag in Tags) 
-				if (_tag.ID == req.id) 
-					return;
+		public Tag Add(AddRequest req) {
+			// None of the requests should have the same ID
+			foreach (var _tag in Tags)
+				if (_tag.ID == req.id)
+					return null;
 
-			var tag = InstantiateTag(req);
-			if (Tags.Where(x => x.ID == tag.ID).Count() > 0) {
-				Tags.Remove(tag);
-				Destroy(tag);
-				throw new Exception("Tags IDs should be unique");
+			// None of the requests should have the same ID as an existing tag
+			if (Tags.Where(x => x.ID == req.id).Count() > 0) {
+				Debug.Log("Tags IDs should be unique");
+				return null;
 			}
-			RegisterTag(tag);
-		}
-
-		void RegisterTag(Tag tag) {
+			
+			var tag = InstantiateTag(req);
 			Tags.Add(tag);
 			tag.OnSelected += () => {
-				if (Tags.Contains(tag))
-					OnSelected?.Invoke(tag);
+				SelectTag(tag);
+				OnSelected?.Invoke(tag);
 			};
-
-			tag.OnDeselected += () => {
-				if (Tags.Contains(tag))
-					OnDeselected?.Invoke(tag);
-			};
+			return tag;
 		}
 
-		Tag InstantiateTag(AddRequest req) {
+		public void SelectTag(Tag tag) {
+			m_SelectedTag = tag;
+
+			// Deselect all tags
+			foreach (var t in Tags) {
+				t.isSilent = true;
+				t.HandleDeselection();
+				t.isSilent = false;
+			}
+
+			m_SelectedTag.isSilent = true;
+			m_SelectedTag.HandleSelection();
+			m_SelectedTag.isSilent = false;
+		}
+
+		Tag InstantiateTag(AddRequest request) {
 			var go = Instantiate(m_Prefab, m_Container);
+			go.name = request.text;
 			var tag = go.GetComponent<Tag>();
 
-			tag.Init(req.id, req.text, req.isSelected, req.data);
+			tag.Init(request.id, request.text, false, request.data);
 			tag.SetColor(RandomColor);
 
 			m_LastModifyTime = Time.time;
@@ -108,7 +127,7 @@ namespace Adrenak.Shiain {
 
 		public void Remove(Tag[] tags) {
 			foreach (var tag in tags)
-				Tags.Remove(tag);
+				Remove(tag);
 		}
 
 		public void Remove(Tag tag) {
